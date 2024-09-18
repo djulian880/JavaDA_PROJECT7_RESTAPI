@@ -21,8 +21,15 @@ public class RuleTests {
 
 	@Test
 	public void ruleTest() {
-		RuleName rule = new RuleName("Rule Name", "Description", "Json", "Template", "SQL", "SQL Part");
+		//RuleName rule = new RuleName("Rule Name", "Description", "Json", "Template", "SQL", "SQL Part");
 
+		RuleName rule = new RuleName();
+		rule.setName("Rule Name");
+		rule.setDescription("Description");
+		rule.setJson("Json");
+		rule.setTemplate("Template");
+		rule.setSqlPart("SQL Part");
+		rule.setSqlStr("SQL");
 		// Save
 		rule = ruleNameRepository.save(rule);
 		Assert.assertNotNull(rule.getId());
