@@ -8,6 +8,7 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -31,21 +32,25 @@ public class SpringSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http.authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/css/**").permitAll();
-                    auth.requestMatchers("/home").permitAll();
-                    auth.requestMatchers("/user/*").permitAll();
+                    //auth.requestMatchers("/css/**").permitAll();
+                    auth.requestMatchers("/").permitAll();
+                    auth.requestMatchers("/home.html").permitAll();
+                    auth.requestMatchers("/user/*").hasRole("ADMIN");
                     auth.requestMatchers("/403").permitAll();
                     auth.anyRequest().authenticated();
                 })
                 .formLogin(Customizer.withDefaults())
-                /*.formLogin(form -> form.loginPage("/login")
-                        .permitAll()
-                        .defaultSuccessUrl("/transfer", true)
-                        .failureUrl("/login?error=true"))
-                .logout(logout -> logout.logoutUrl("/logout")
-                        .logoutSuccessUrl("/login?logout=true"))*/
+                .formLogin(form -> form
+                        .defaultSuccessUrl("/loginsuccessful", true))
+                .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)  // Crée une session seulement si nécessaire
+                        .maximumSessions(1)  // Nombre maximum de sessions simultanées par utilisateur
+                        .maxSessionsPreventsLogin(false)  // Si atteint, la nouvelle session écrase l'ancienne
+                        .expiredUrl("/403.html")
+                )
                 .build();
     }
+
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {

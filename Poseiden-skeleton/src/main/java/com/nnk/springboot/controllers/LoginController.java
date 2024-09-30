@@ -2,13 +2,18 @@ package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Collection;
+
 @Controller
-@RequestMapping("app")
+//@RequestMapping("app")
 public class LoginController {
 
     @Autowired
@@ -37,4 +42,6 @@ public class LoginController {
         mav.setViewName("403");
         return mav;
     }
+
+
 }
