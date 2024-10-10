@@ -27,6 +27,7 @@ public class BidListController {
     // TODO: Inject Bid service
     @Autowired
     BidListService bidListService;
+
     @RequestMapping("/bidList/list")
     public String home(Model model, HttpServletRequest request)
     {
