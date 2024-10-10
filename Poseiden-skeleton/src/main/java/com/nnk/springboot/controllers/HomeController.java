@@ -39,7 +39,7 @@ public class HomeController
 		if(role.equals("ROLE_ADMIN")) {
 			return "redirect:/admin/home";
 		}else{
-			return "redirect:/trade";
+			return "redirect:/trade/list";
 		}
 	}
 }
