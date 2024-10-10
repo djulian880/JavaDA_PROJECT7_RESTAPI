@@ -15,13 +15,18 @@ import org.hibernate.annotations.DynamicUpdate;
 public class Rating {
     // TODO: Map columns in data table RATING with corresponding java fields
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Integer id;
+
 	@Column
 	String moodysRating;
+
 	@Column
 	String sandPRating;
+
 	@Column
 	String fitchRating;
+
 	@Column
 	Integer orderNumber;
 }
