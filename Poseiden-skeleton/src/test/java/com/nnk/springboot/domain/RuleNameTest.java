@@ -1,14 +1,6 @@
 package com.nnk.springboot.domain;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-import java.util.Optional;
-import java.util.Arrays;
-import java.util.List;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
 
 public class RuleNameTest {
@@ -122,7 +114,6 @@ public class RuleNameTest {
 
         // Assuming you have implemented canEqual in your RuleName class
         assertTrue(ruleName1.canEqual(ruleName2), "canEqual should return true for objects of the same type");
-
         assertFalse(ruleName1.canEqual(new Object()), "canEqual should return false for different types");
     }
 }

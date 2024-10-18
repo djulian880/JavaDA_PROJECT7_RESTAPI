@@ -8,9 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 
 import com.nnk.springboot.domain.Trade;
 import com.nnk.springboot.service.TradeService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -31,10 +29,6 @@ public class TradeControllerTest {
     @MockBean
     private TradeService tradeService;
 
-    @BeforeEach
-    public void setup() {
-        // Setup MockMvc for testing
-    }
 
     @Test
     @WithMockUser(username = "test@example.com", roles = "USER")

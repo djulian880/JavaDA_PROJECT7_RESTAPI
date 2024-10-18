@@ -8,9 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 
 import com.nnk.springboot.domain.CurvePoint;
 import com.nnk.springboot.service.CurvePointService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -30,11 +28,6 @@ public class CurvePointControllerTest {
 
     @MockBean
     private CurvePointService curvePointService;
-
-    @BeforeEach
-    public void setup() {
-        // Setup MockMvc for testing
-    }
 
     @Test
     @WithMockUser(username = "test@example.com", roles = "USER")
@@ -136,18 +129,6 @@ public class CurvePointControllerTest {
                 .andDo(print());
     }
 
-  /*  @Test
-    @WithMockUser(username = "test@example.com", roles = "USER")
-    public void testUpdateCurvePointWithErrors() throws Exception {
-        mockMvc.perform(post("/curvePoint/update/1")
-                        .with(SecurityMockMvcRequestPostProcessors.csrf()) // Added CSRF token
-                        .param("curveId", "")
-                        .param("term", "invalid-term")
-                        .contentType(MediaType.APPLICATION_FORM_URLENCODED))
-                .andExpect(status().isOk())
-                .andExpect(view().name("/curvePoint/update{1}"))
-                .andDo(print());
-    }*/
 
     @Test
     @WithMockUser(username = "test@example.com", roles = "USER")

@@ -8,9 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 
 import com.nnk.springboot.domain.User;
 import com.nnk.springboot.repositories.UserRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -36,10 +34,6 @@ public class UserControllerTest {
     @Mock
     private BCryptPasswordEncoder passwordEncoder;
 
-    @BeforeEach
-    public void setup() {
-        // Setup MockMvc for testing
-    }
 
     @Test
     @WithMockUser(username = "test@example.com", roles = "USER")
@@ -104,17 +98,6 @@ public class UserControllerTest {
                 .andExpect(model().attributeExists("user"))
                 .andDo(print());
     }
-
- /*   @Test
-    @WithMockUser(username = "test@example.com", roles = "USER")
-    public void testShowUpdateFormNotFound() throws Exception {
-        when(userRepository.findById(1)).thenReturn(Optional.empty());
-
-        mockMvc.perform(get("/user/update/1"))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/error"))
-                .andDo(print());
-    }*/
 
     @Test
     @WithMockUser(username = "test@example.com", roles = "USER")

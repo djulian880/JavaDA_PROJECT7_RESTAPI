@@ -1,16 +1,8 @@
 package com.nnk.springboot.domain;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-import java.util.Optional;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Set;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
@@ -68,26 +60,6 @@ public class UserTest {
         // Assert
         assertEquals(1, violations.size());
         assertEquals("Username is mandatory", violations.iterator().next().getMessage());
-    }
-
-    @Test
-    public void testPasswordValidation() {
-        // Arrange
-        User user = new User();
-        user.setUsername("john_doe");
-        user.setPassword("pass"); // Invalid password
-        user.setFullname("John Doe");
-        user.setRole("Admin");
-
-        // Act
-        Set<ConstraintViolation<User>> violations = validator.validate(user);
-
-        // Assert
-        /*
-        assertEquals(2, violations.size());
-        assertTrue(violations.stream().anyMatch(v -> v.getMessage().equals("Password must be at least 8 characters long.")));
-        assertTrue(violations.stream().anyMatch(v -> v.getMessage().equals("Password must at least contain one number and one letter in uppercase.")));
-    */
     }
 
 

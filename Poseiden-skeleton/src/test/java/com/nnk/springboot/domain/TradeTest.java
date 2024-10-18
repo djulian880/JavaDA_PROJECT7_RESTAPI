@@ -1,19 +1,12 @@
 package com.nnk.springboot.domain;
+
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+
 
 import java.sql.Timestamp;
-import java.util.Optional;
-import java.util.Arrays;
-import java.util.List;
 
-import org.junit.Before;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
 
 public class TradeTest {
@@ -70,28 +63,6 @@ public class TradeTest {
     }
     @Test
     public void testTradeCreation() {
-        // Arrange
-        /*Trade trade = new Trade();
-        trade.setAccount("Account1");
-        trade.setType("Buy");
-        trade.setBuyQuantity(100.0);
-        trade.setSellQuantity(50.0);
-        trade.setBuyPrice(10.5);
-        trade.setSellPrice(11.0);
-        trade.setBenchmark("Benchmark1");
-        trade.setTradeDate(new Timestamp(System.currentTimeMillis()));
-        trade.setSecurity("Security1");
-        trade.setStatus("Completed");
-        trade.setTrader("Trader1");
-        trade.setBook("Book1");
-        trade.setCreationName("Creator1");
-        trade.setCreationDate(new Timestamp(System.currentTimeMillis()));
-        trade.setRevisionName("Revisor1");
-        trade.setRevisionDate(new Timestamp(System.currentTimeMillis()));
-        trade.setDealName("Deal1");
-        trade.setDealType("Type1");
-        trade.setSourceListId("Source1");
-        trade.setSide("Buy");*/
 
         // Act & Assert
         assertEquals("Account1", trade.getAccount());

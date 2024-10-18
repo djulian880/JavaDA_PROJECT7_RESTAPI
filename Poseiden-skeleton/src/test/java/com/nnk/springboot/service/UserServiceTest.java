@@ -3,9 +3,6 @@ package com.nnk.springboot.service;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 import java.util.Optional;
-import java.util.Arrays;
-import java.util.List;
-
 import com.nnk.springboot.domain.User;
 import com.nnk.springboot.repositories.UserRepository;
 import org.junit.jupiter.api.BeforeEach;

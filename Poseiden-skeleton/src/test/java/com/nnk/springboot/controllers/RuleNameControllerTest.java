@@ -8,9 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 
 import com.nnk.springboot.domain.RuleName;
 import com.nnk.springboot.service.RuleNameService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -31,10 +29,6 @@ public class RuleNameControllerTest {
     @MockBean
     private RuleNameService ruleNameService;
 
-    @BeforeEach
-    public void setup() {
-        // Setup MockMvc for testing
-    }
 
     @Test
     @WithMockUser(username = "test@example.com", roles = "USER")
@@ -93,7 +87,6 @@ public class RuleNameControllerTest {
                         .param("name", "")
                         .param("description", "Invalid description")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED))
-     //           .andExpect(status().isOk())
                 .andExpect(redirectedUrl("/ruleName/list"))
                 .andDo(print());
     }
@@ -150,7 +143,6 @@ public class RuleNameControllerTest {
                         .param("name", "")
                         .param("description", "Invalid description")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED))
-     //           .andExpect(status().isOk())
                 .andExpect(redirectedUrl("/ruleName/list"))
                 .andDo(print());
     }

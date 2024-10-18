@@ -8,18 +8,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 
 import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.service.BidListService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
+
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.validation.BindingResult;
+
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -32,10 +29,6 @@ public class BidListControllerTest {
     @MockBean
     private BidListService bidListService;
 
-    @BeforeEach
-    public void setup() {
-        // Setup MockMvc for testing
-    }
 
     @Test
     @WithMockUser(username = "test@example.com", roles = "USER")
@@ -50,7 +43,6 @@ public class BidListControllerTest {
         when(bidListService.getAll()).thenReturn(Arrays.asList(bid1, bid2));
 
         mockMvc.perform(get("/bidList/list"))
-//                .andExpect(status().isOk())
                 .andExpect(view().name("bidList/list"))
                 .andExpect(model().attributeExists("bidLists"))
                 .andExpect(model().attribute("bidLists", Arrays.asList(bid1, bid2)))
@@ -61,7 +53,6 @@ public class BidListControllerTest {
     @WithMockUser(username = "test@example.com", roles = "USER")
     public void testAddBidForm() throws Exception {
         mockMvc.perform(get("/bidList/add"))
-//                .andExpect(status().isOk())
                 .andExpect(view().name("bidList/add"))
                 .andDo(print());
     }
@@ -92,7 +83,6 @@ public class BidListControllerTest {
                         .with(csrf())
                         .param("account", "") // Empty account to trigger validation error
                         .param("type", "Type")
-                        //.contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 )
                 .andExpect(status().isOk())
                 .andExpect(view().name("bidList/add"))
@@ -110,7 +100,6 @@ public class BidListControllerTest {
         when(bidListService.getBidListById(1)).thenReturn(Optional.of(bid));
 
         mockMvc.perform(get("/bidList/update/1"))
-//                .andExpect(status().isOk())
                 .andExpect(view().name("bidList/update"))
                 .andExpect(model().attributeExists("bidList"))
                 .andDo(print());
@@ -122,7 +111,6 @@ public class BidListControllerTest {
         when(bidListService.getBidListById(1)).thenReturn(Optional.empty());
 
         mockMvc.perform(get("/bidList/update/1"))
-//                .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/error"))
                 .andDo(print());
     }
@@ -140,24 +128,11 @@ public class BidListControllerTest {
                 .andDo(print());
     }
 
- /*   @Test
-    @WithMockUser(username = "test@example.com", roles = "USER")
-    public void testUpdateBidWithErrors() throws Exception {
-        mockMvc.perform(post("/bidList/update/1")
-                        .with(csrf())
-                        .param("account", "") // Empty account to trigger validation error
-                        .param("type", "Updated Type")
-                        .contentType(MediaType.APPLICATION_FORM_URLENCODED))
-                .andExpect(status().isOk())
-                .andExpect(view().name("/bidList/update/{1}"))
-                .andDo(print());
-    }*/
 
     @Test
     @WithMockUser(username = "test@example.com", roles = "USER")
     public void testDeleteBid() throws Exception {
         mockMvc.perform(get("/bidList/delete/1"))
-//                .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/bidList/list"))
                 .andDo(print());
 

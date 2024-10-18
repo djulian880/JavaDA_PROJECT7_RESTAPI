@@ -1,14 +1,7 @@
 package com.nnk.springboot.domain;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-import java.util.Optional;
-import java.util.Arrays;
-import java.util.List;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+
 
 
 public class RatingTest {
@@ -110,7 +103,6 @@ public class RatingTest {
 
         // Assuming you have implemented canEqual in your Rating class
         assertTrue(rating1.canEqual(rating2), "canEqual should return true for objects of the same type");
-
         assertFalse(rating1.canEqual(new Object()), "canEqual should return false for different types");
     }
 }

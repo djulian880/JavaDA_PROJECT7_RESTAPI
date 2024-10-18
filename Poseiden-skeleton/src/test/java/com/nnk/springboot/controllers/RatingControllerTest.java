@@ -7,9 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 
 import com.nnk.springboot.domain.Rating;
 import com.nnk.springboot.service.RatingService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -30,10 +28,6 @@ public class RatingControllerTest {
     @MockBean
     private RatingService ratingService;
 
-    @BeforeEach
-    public void setup() {
-        // Setup MockMvc for testing
-    }
 
     @Test
     @WithMockUser(username = "test@example.com", roles = "USER")
@@ -81,19 +75,6 @@ public class RatingControllerTest {
                 .andExpect(redirectedUrl("/rating/list"))
                 .andDo(print());
     }
-/*
-    @Test
-    @WithMockUser(username = "test@example.com", roles = "USER")
-    public void testValidateWithErrors() throws Exception {
-        mockMvc.perform(post("/rating/validate")
-                        .with(SecurityMockMvcRequestPostProcessors.csrf()) // Added CSRF token
-                        .param("orderNumber", "")
-                        .param("moodysRating", "invalid-rating")
-                        .contentType(MediaType.APPLICATION_FORM_URLENCODED))
-                .andExpect(status().isOk())
-                .andExpect(view().name("rating/add"))
-                .andDo(print());
-    }*/
 
     @Test
     @WithMockUser(username = "test@example.com", roles = "USER")
@@ -137,18 +118,6 @@ public class RatingControllerTest {
                 .andDo(print());
     }
 
-  /*  @Test
-    @WithMockUser(username = "test@example.com", roles = "USER")
-    public void testUpdateRatingWithErrors() throws Exception {
-        mockMvc.perform(post("/rating/update/1")
-                        .with(SecurityMockMvcRequestPostProcessors.csrf()) // Added CSRF token
-                        .param("orderNumber", "")
-                        .param("moodysRating", "invalid-rating")
-                        .contentType(MediaType.APPLICATION_FORM_URLENCODED))
-                .andExpect(status().isOk())
-                .andExpect(view().name("/rating/update{1}"))
-                .andDo(print());
-    }*/
 
     @Test
     @WithMockUser(username = "test@example.com", roles = "USER")

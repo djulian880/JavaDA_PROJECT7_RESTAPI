@@ -1,17 +1,10 @@
 package com.nnk.springboot.domain;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 import java.sql.Timestamp;
-import java.util.Optional;
-import java.util.Arrays;
-import java.util.List;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+
 
 public class BidListTest {
 
@@ -65,31 +58,6 @@ public class BidListTest {
         assertEquals("Buy", bidList.getSide());
     }
 
-    @Test
-    public void testBidListValidation() {
-        // Arrange
-        BidList bidList = new BidList();
-
-        // Act & Assert for NotBlank constraints
-       /* Exception accountException = assertThrows(Exception.class, () -> {
-            bidList.setAccount(""); // Should throw exception due to @NotBlank
-        });
-        assertEquals("Account is mandatory", accountException.getMessage());
-
-        Exception typeException = assertThrows(Exception.class, () -> {
-            bidList.setType(""); // Should throw exception due to @NotBlank
-        });
-        assertEquals("Type is mandatory", typeException.getMessage());
-*/
-        // Act & Assert for @Digits constraints
-      /*  bidList.setBidQuantity(100.0);
-        Exception bidQuantityException = assertThrows(Exception.class, () -> {
-            bidList.setBidQuantity(10000000000.0); // Should throw exception due to @Digits
-        });
-        // The specific error message depends on your validation framework setup
-        assertEquals("The value must be between -9999999999 and 9999999999", bidQuantityException.getMessage());
-    */
-    }
 
     @Test
     public void testEquals() {

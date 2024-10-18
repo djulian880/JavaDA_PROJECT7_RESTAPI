@@ -32,7 +32,6 @@ public class SpringSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http.authorizeHttpRequests(auth -> {
-                    //auth.requestMatchers("/css/**").permitAll();
                     auth.requestMatchers("/").permitAll();
                     auth.requestMatchers("/home.html").permitAll();
                     auth.requestMatchers("/user/*").hasRole("ADMIN");
@@ -43,14 +42,13 @@ public class SpringSecurityConfig {
                 .formLogin(form -> form
                         .defaultSuccessUrl("/loginsuccessful", true))
                 .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)  // Crée une session seulement si nécessaire
-                        .maximumSessions(1)  // Nombre maximum de sessions simultanées par utilisateur
-                        .maxSessionsPreventsLogin(false)  // Si atteint, la nouvelle session écrase l'ancienne
+                        .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                        .maximumSessions(1)
+                        .maxSessionsPreventsLogin(false)
                         .expiredUrl("/403.html")
                 )
                 .build();
     }
-
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {

@@ -1,16 +1,9 @@
 package com.nnk.springboot.domain;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 import java.sql.Timestamp;
-import java.util.Optional;
-import java.util.Arrays;
-import java.util.List;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+
 
 
 public class CurvePointTest {
@@ -32,35 +25,6 @@ public class CurvePointTest {
         assertEquals(5.25, curvePoint.getTerm());
         assertEquals(10.75, curvePoint.getValue());
         assertNotNull(curvePoint.getCreationDate());
-    }
-
-    @Test
-    public void testCurvePointValidation() {
-        // Arrange
-        CurvePoint curvePoint = new CurvePoint();
-
-        // Act & Assert for @Digits constraints
-        Exception curveIdException = null;
-        /*
-        curveIdException= assertThrows(Exception.class, () -> {
-            curvePoint.setCurveId(1000000000); // Should throw exception due to @Digits
-        });
-        // The specific error message depends on your validation framework setup
-        assertEquals("The value must be between -9999999999 and 9999999999", curveIdException.getMessage());
-
-        curvePoint.setTerm(5.25);
-        Exception termException = assertThrows(Exception.class, () -> {
-            curvePoint.setTerm(10000000000.0); // Should throw exception due to @Digits
-        });
-        assertEquals("Must be a floating point value", termException.getMessage());
-
-        curvePoint.setValue(10.75);
-        Exception valueException = assertThrows(Exception.class, () -> {
-            curvePoint.setValue(10000000000.0); // Should throw exception due to @Digits
-        });
-        assertEquals("Must be a floating point value", valueException.getMessage());
-
-         */
     }
 
     @Test
