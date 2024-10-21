@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 
 
+import com.nnk.springboot.configuration.SpringSecurityConfig;
 import com.nnk.springboot.domain.User;
 import com.nnk.springboot.repositories.UserRepository;
 import org.junit.jupiter.api.Test;
@@ -34,6 +35,9 @@ public class UserControllerTest {
     @Mock
     private BCryptPasswordEncoder passwordEncoder;
 
+    @MockBean
+    private SpringSecurityConfig springSecurityConfig;
+
 
     @Test
     @WithMockUser(username = "test@example.com", roles = "USER")
@@ -54,7 +58,7 @@ public class UserControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "test@example.com", roles = "USER")
+    @WithMockUser(username = "test@example.com", roles = "ADMIN")
     public void testAddUserForm() throws Exception {
         mockMvc.perform(get("/user/add"))
                 .andExpect(status().isOk())
@@ -63,7 +67,7 @@ public class UserControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "test@example.com", roles = "USER")
+    @WithMockUser(username = "test@example.com", roles = "ADMIN")
     public void testValidateUserSuccess() throws Exception {
         User user = new User();
         user.setUsername("testUser");
@@ -77,14 +81,13 @@ public class UserControllerTest {
                         .param("password", "password123")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(status().isOk())
-                //.andExpect(redirectedUrl("/user/list"))
                 .andDo(print());
     }
 
 
 
     @Test
-    @WithMockUser(username = "test@example.com", roles = "USER")
+    @WithMockUser(username = "test@example.com", roles = "ADMIN")
     public void testShowUpdateForm() throws Exception {
         User user = new User();
         user.setId(1);
@@ -100,20 +103,26 @@ public class UserControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "test@example.com", roles = "USER")
+    @WithMockUser(username = "test@example.com", roles = "ADMIN")
     public void testUpdateUserSuccess() throws Exception {
+        when(springSecurityConfig.passwordEncoder()).thenReturn(passwordEncoder);
+
+        // Simulate password encoding
+        when(passwordEncoder.encode("Password123!")).thenReturn("encodedPassword123!");
+
         mockMvc.perform(post("/user/update/1")
                         .with(SecurityMockMvcRequestPostProcessors.csrf()) // Added CSRF token
-                        .param("username", "UpdatedUser")
-                        .param("password", "newPassword123")
+                        .param("username", "testUser")
+                        .param("password", "newPassword123!")
+                        .param("fullname", "fulltestUser")
+                        .param("role", "ADMIN")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED))
-                .andExpect(status().isOk())
-                //.andExpect(redirectedUrl("/user/list"))
+                .andExpect(status().is3xxRedirection())
                 .andDo(print());
     }
 
     @Test
-    @WithMockUser(username = "test@example.com", roles = "USER")
+    @WithMockUser(username = "test@example.com", roles = "ADMIN")
     public void testUpdateUserWithErrors() throws Exception {
         mockMvc.perform(post("/user/update/1")
                         .with(SecurityMockMvcRequestPostProcessors.csrf()) // Added CSRF token
@@ -126,7 +135,7 @@ public class UserControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "test@example.com", roles = "USER")
+    @WithMockUser(username = "test@example.com", roles = "ADMIN")
     public void testDeleteUser() throws Exception {
         User user = new User();
         user.setId(1);
@@ -141,15 +150,17 @@ public class UserControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "test@example.com", roles = "USER")
+    @WithMockUser(username = "test@example.com", roles = "ADMIN")
     public void testValidateUserSuccessAndPasswordEncoding() throws Exception {
         // Simulate valid user input
         User user = new User();
         user.setUsername("testUser");
-        user.setPassword("password123");
+        user.setPassword("Password123!");
+
+        when(springSecurityConfig.passwordEncoder()).thenReturn(passwordEncoder);
 
         // Simulate password encoding
-        when(passwordEncoder.encode("password123")).thenReturn("encodedPassword123");
+        when(passwordEncoder.encode("Password123!")).thenReturn("encodedPassword123!");
 
         // Simulate saving user in repository
         when(userRepository.save(any(User.class))).thenReturn(user);
@@ -160,26 +171,34 @@ public class UserControllerTest {
         mockMvc.perform(post("/user/validate")
                         .with(SecurityMockMvcRequestPostProcessors.csrf()) // Added CSRF token
                         .param("username", "testUser")
-                        .param("password", "password123")
-                        .contentType(MediaType.APPLICATION_FORM_URLENCODED))
-            //    .andExpect(status().isOk())
-           //     .andExpect(redirectedUrl("/user/list"))
+                        .param("password", "Password123!")
+                        .param("fullname", "fulltestUser")
+                        .param("role", "ADMIN")
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                )
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/user/list"))
                 .andDo(print());
 
         // Verify password encoding was called
-       // verify(passwordEncoder, times(1)).encode("password123");
+        verify(passwordEncoder, times(1)).encode("Password123!");
 
         // Verify user was saved with encoded password
-      /*  verify(userRepository, times(1)).save(argThat(savedUser ->
-                savedUser.getPassword().equals("encodedPassword123")
+        verify(userRepository, times(1)).save(argThat(savedUser ->
+                savedUser.getPassword().equals("encodedPassword123!")
         ));
-*/
+
+
+        verify(userRepository, times(1)).save(argThat(savedUser ->
+                savedUser.getUsername().equals("testUser")
+        ));
+
         // Verify that after saving, the list is fetched and added to the model
-        //verify(userRepository, times(1)).findAll();
+        verify(userRepository, times(1)).findAll();
     }
 
     @Test
-    @WithMockUser(username = "test@example.com", roles = "USER")
+    @WithMockUser(username = "test@example.com", roles = "ADMIN")
     public void testValidateUserWithErrors() throws Exception {
         // Simulate a validation error by sending empty username and password
         mockMvc.perform(post("/user/validate")
