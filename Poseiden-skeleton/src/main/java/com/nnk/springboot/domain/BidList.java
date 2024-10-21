@@ -17,7 +17,6 @@ import org.hibernate.annotations.DynamicUpdate;
 @Entity
 @Table(name = "BidList")
 public class BidList {
-    // TODO: Map columns in data table BIDLIST with corresponding java fields
 	@Id
 	@Column(name ="BidListId")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

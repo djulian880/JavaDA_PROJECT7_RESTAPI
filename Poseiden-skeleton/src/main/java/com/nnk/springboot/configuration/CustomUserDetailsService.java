@@ -46,7 +46,7 @@ public class CustomUserDetailsService implements UserDetailsService {
             log.error("Utilisateur pas trouvé: "+username);
             throw new UsernameNotFoundException("Utilisateur avec le nom " + username + " non trouvé");
         }
-        log.debug(" utilisatueur trouvé: "+userFound.getUsername());
+        log.debug(" utilisateur trouvé: "+userFound.getUsername());
         return new User(userFound.getUsername(), userFound.getPassword(), getGrantedAuthorities(userFound.getRole()));
     }
 
