@@ -11,7 +11,12 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-
+/**
+ * Provides the necessary configuration to enable user login securely
+ *
+ * @author Poseidon Capital Solutions
+ *
+ */
 @Configuration
 @EnableWebSecurity
 public class SpringSecurityConfig {
@@ -19,6 +24,13 @@ public class SpringSecurityConfig {
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
 
+    /**
+     * Builds the authentication manager with the registered users and the password encrypting method
+     *
+     * @param http web based security configuration
+     * @param bCryptPasswordEncoder Encrypting password encoder
+     * @throws Exception of every kind
+     */
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http, BCryptPasswordEncoder bCryptPasswordEncoder)
             throws Exception {
@@ -29,6 +41,13 @@ public class SpringSecurityConfig {
         return authenticationManagerBuilder.build();
     }
 
+    /**
+     * Sets up the required filters to restrain accessibility of endpoints to registered users.
+     * Configures also the session parameters: only 1 session at a time, stores cookies only if needed
+     *
+     * @param http web based security configuration
+     * @throws Exception of every kind
+     */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http.authorizeHttpRequests(auth -> {
@@ -50,6 +69,10 @@ public class SpringSecurityConfig {
                 .build();
     }
 
+    /**
+     * Provides an encryption method for password
+     *
+     */
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

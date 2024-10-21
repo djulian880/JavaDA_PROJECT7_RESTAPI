@@ -15,6 +15,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Provides the list of registered users from the database
+ *
+ * @author Poseidon Capital Solutions
+ *
+ */
+
 @Slf4j
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
@@ -22,11 +29,15 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Autowired
     private UserService userService;
 
+    /**
+     * Returns all the user's parameters required for security management for a specific user
+     *
+     * @param username Username of User
+     * @throws UsernameNotFoundException if User not found
+     */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         log.debug("Recherche utilisatueur: "+username);
-
-
         Optional<com.nnk.springboot.domain.User> userreturned = userService.getUserByUserName(username);
         com.nnk.springboot.domain.User userFound=null;
         if (userreturned.isPresent()) {
@@ -39,6 +50,11 @@ public class CustomUserDetailsService implements UserDetailsService {
         return new User(userFound.getUsername(), userFound.getPassword(), getGrantedAuthorities(userFound.getRole()));
     }
 
+    /**
+     * Builds the list of authorities allowed for a specific role defined for a user
+     *
+     * @param role definer role of user
+     */
     private List<GrantedAuthority> getGrantedAuthorities(String role) {
         List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
         authorities.add(new SimpleGrantedAuthority("ROLE_" + role));
